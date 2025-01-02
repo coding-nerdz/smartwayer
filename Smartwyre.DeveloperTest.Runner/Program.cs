@@ -1,11 +1,21 @@
-﻿using System;
+﻿using Smartwyre.DeveloperTest.Data;
+using Smartwyre.DeveloperTest.Services;
+using Smartwyre.DeveloperTest.Types;
 
-namespace Smartwyre.DeveloperTest.Runner;
+var rebateStore = new RebateDataStore();
+var productStore = new ProductDataStore();
 
-class Program
+var rebateService = new RebateService(rebateStore, productStore);
+
+var request = new CalculateRebateRequest
 {
-    static void Main(string[] args)
-    {
-        throw new NotImplementedException();
-    }
-}
+    RebateIdentifier = "Rebate1",
+    ProductIdentifier = "Product1",
+    Quantity = 10
+};
+
+var result = rebateService.CalculateRebate(request);
+
+Console.WriteLine(result.Success
+    ? $"Rebate calculated successfully. Amount: {result.RebateAmount}"
+    : "Rebate calculation failed.");
