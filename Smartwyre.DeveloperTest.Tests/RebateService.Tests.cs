@@ -16,16 +16,16 @@ public class RebateServiceTests
         var product = new Product { Identifier = "Product1", Price = 500 };
         var request = new CalculateRebateRequest { RebateIdentifier = "Rebate1", ProductIdentifier = "Product1" };
 
-        var mockRebateStore = new Mock<IRebateDataStore>();
+        var mockRebateStore = new Mock<RebateDataStore>();
         mockRebateStore.Setup(store => store.GetRebate("Rebate1")).Returns(rebate);
 
-        var mockProductStore = new Mock<IProductDataStore>();
+        var mockProductStore = new Mock<ProductDataStore>();
         mockProductStore.Setup(store => store.GetProduct("Product1")).Returns(product);
 
         var service = new RebateService(mockRebateStore.Object, mockProductStore.Object);
 
         // Act
-        var result = service.CalculateRebate(request);
+        var result = service.Calculate(request);
 
         // Assert
         Assert.True(result.Success);
@@ -38,13 +38,13 @@ public class RebateServiceTests
         // Arrange
         var request = new CalculateRebateRequest { RebateIdentifier = "Invalid", ProductIdentifier = "Invalid" };
 
-        var mockRebateStore = new Mock<IRebateDataStore>();
-        var mockProductStore = new Mock<IProductDataStore>();
+        var mockRebateStore = new Mock<RebateDataStore>();
+        var mockProductStore = new Mock<ProductDataStore>();
 
         var service = new RebateService(mockRebateStore.Object, mockProductStore.Object);
 
         // Act
-        var result = service.CalculateRebate(request);
+        var result = service.Calculate(request);
 
         // Assert
         Assert.False(result.Success);

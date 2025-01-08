@@ -1,6 +1,7 @@
 ﻿using Smartwyre.DeveloperTest.Data;
 using Smartwyre.DeveloperTest.Services;
 using Smartwyre.DeveloperTest.Types;
+using System;
 
 var rebateStore = new RebateDataStore();
 var productStore = new ProductDataStore();
@@ -14,7 +15,7 @@ var request = new CalculateRebateRequest
     Quantity = 10
 };
 
-var result = rebateService.CalculateRebate(request);
+var result = rebateService.Calculate(request);
 
 Console.WriteLine(result.Success
     ? $"Rebate calculated successfully. Amount: {result.RebateAmount}"
